@@ -15,7 +15,7 @@ def home_view(request):
     else:
         ip_address = request.META.get("REMOTE_ADDR")
 
-    # ip_address = "105.112.102.120"
+    ip_address = "10.45.153.152"
 
     try:
         reader.city(ip_address) 				# Check if Ip address is a valid one.  "105.112.102.120"
@@ -33,5 +33,24 @@ def home_view(request):
     print("worked")  
 
     return render(request, "index.html", context)
+
+
+
+def area_view(request):
+    context = {}
+    context['remote'] = request.META.get("REMOTE_ADDR")
+    # context['forwards'] = request.META.get("HTTP_X_REAL_IP")
+    # context['forward'] =   request.META
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')+"hey"
+    context['forward'] = ip    
+
+
+
+    return render(request, "area.html", context)
 
 
