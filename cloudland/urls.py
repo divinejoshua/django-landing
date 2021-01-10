@@ -19,6 +19,6 @@ from homeapp import views
 
 urlpatterns = [
     path('', views.home_view, name="home"),
-    path('area/', views.area_view, name="area"),
+    # path('area/', views.area_view, name="area"),
     path('secret/', admin.site.urls),
 ]

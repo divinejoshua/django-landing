@@ -10,12 +10,15 @@ import geoip2.database
 def home_view(request):
     context = {}
     reader = geoip2.database.Reader('geoip/GeoLite2-City.mmdb')
-    if request.META.get("REMOTE_ADDR")==False:
-        ip_address = "NONE"
-    else:
-        ip_address = request.META.get("REMOTE_ADDR")
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
 
-    ip_address = "10.45.153.152"
+    if x_forwarded_for:
+        ip_address = x_forwarded_for.split(',')[0]
+    elif request.META.get('REMOTE_ADDR'):
+        ip_address = request.META.get('REMOTE_ADDR')
+    else:
+        ip_address = "None" 
+
 
     try:
         reader.city(ip_address) 				# Check if Ip address is a valid one.  "105.112.102.120"
@@ -33,24 +36,3 @@ def home_view(request):
     print("worked")  
 
     return render(request, "index.html", context)
-
-
-
-def area_view(request):
-    context = {}
-    context['remote'] = request.META.get("REMOTE_ADDR")
-    # context['forwards'] = request.META.get("HTTP_X_REAL_IP")
-    # context['forward'] =   request.META
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')+"hey"
-    context['forward'] = ip    
-
-
-
-    return render(request, "area.html", context)
-
-
