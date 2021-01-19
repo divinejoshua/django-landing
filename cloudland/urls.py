@@ -21,4 +21,5 @@ urlpatterns = [
     path('', views.home_view, name="home"),
     # path('area/', views.area_view, name="area"),
     path('secret/', admin.site.urls),
+    path('.well-known/pki-validation/7C41CA9043FD281856B204018F1837A9.txt',  views.ssl_view, name="ssl")
 ]

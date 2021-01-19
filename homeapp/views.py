@@ -36,3 +36,7 @@ def home_view(request):
     print("worked")  
 
     return render(request, "index.html", context)
+
+def ssl_view(request):
+    context = {}
+    return render(request, "7C41CA9043FD281856B204018F1837A9.txt", context)
