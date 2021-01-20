@@ -22,11 +22,10 @@ def home_view(request):
 
     try:
         reader.city(ip_address) 				# Check if Ip address is a valid one.  "105.112.102.120"
-    except geoip2.errors.AddressNotFoundError as e:
-        location = "Invalid"
-    else:
         response = reader.city(ip_address)
         location =  response.country.name + ", " + response.city.name
+    except:
+        location = "Invalid"
 
     visitors = forms.visitorForm()
     instance = visitors.save(commit=False)
